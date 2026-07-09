@@ -235,18 +235,14 @@
             }, 1500);
         }
 
-        // Stage 3: Gift Hunt Logic (Rigged so she has to find Box 3)
+        // Stage 3: Gift Hunt Logic
         function tryGift(boxNumber) {
             if(boxNumber === 3) {
                 alert("BINGO! 🎉 Tumne sahi box chunna! Isme hai tumhara sabse keemti gift...");
                 nextStage(3, 4);
-                startHeartsAndPhotos(); // Starts romantic floating stage
-            } else if(boxNumber === 1) {
-                alert("Wrong Answer! ❌\n\nPar koi baat nahi 😘 Dusra choose karo jab tak sahi nahi hota!");
-            } else if(boxNumber === 2) {
-                alert("Ohho galat box! ❌\n\nPar koi baat nahi 😘 Dusra choose karo jab tak sahi nahi hota!");
+                startHeartsAndPhotos();
             } else {
-                alert("Yeh bhi khali nikla! ❌\n\nPar koi baat nahi 😘 Dusra choose karo jab tak sahi nahi hota!");
+                alert("Wrong Answer! ❌\n\nPar koi baat nahi 😘 Dusra choose karo jab tak sahi nahi hota!");
             }
         }
 
@@ -264,7 +260,6 @@
                 const img = document.createElement('img');
                 img.src = content;
                 img.classList.add('floating-photo');
-                // If image fails to load, fallback to a heart emoji so it doesn't look broken
                 img.onerror = function() { el.innerHTML = "❤️"; };
                 el.appendChild(img);
             } else {
@@ -273,7 +268,7 @@
             }
             
             el.style.left = Math.random() * 90 + 'vw';
-            el.style.animationDuration = Math.random() * 3 + 4 + 's'; // 4 to 7 seconds
+            el.style.animationDuration = Math.random() * 3 + 4 + 's';
             container.appendChild(el);
             setTimeout(() => { el.remove(); }, 6000);
         }
@@ -289,19 +284,26 @@
         }
 
         function startHeartsAndPhotos() {
-            // 1. Pink Hearts float permanently in the background
+            // 1. Pink Hearts float permanently
             heartInterval = setInterval(() => { 
                 const hearts = ['❤️', '💖', '💕', '🌸'];
                 spawnElement(hearts[Math.floor(Math.random() * hearts.length)]); 
             }, 400);
 
-            // 2. Photos float alongside the hearts (Assumes photos named photo1.jpg to photo5.jpg are uploaded on GitHub)
+            // 2. Photos loop based on GitHub uploaded names (handling double extension)
             let photoCount = 1;
             photoInterval = setInterval(() => {
-                spawnElement(`photo${photoCount}.jpg`, true);
+                if (photoCount === 1) {
+                    spawnElement(`photo1.jpg`, true);
+                } else if (photoCount === 3 || photoCount === 4) {
+                    spawnElement(`photo${photoCount}.jpg.PNG`, true);
+                } else {
+                    spawnElement(`photo${photoCount}.jpg.JPG`, true);
+                }
+
                 photoCount++;
-                if(photoCount > 7) photoCount = 1; // Loops from photo1 to photo5
-            }, 1200); // Spawns a photo every 1.2 seconds
+                if(photoCount > 7) photoCount = 1;
+            }, 1200);
         }
     </script>
 </body>
