@@ -92,21 +92,31 @@
             text-align: left;
             border-radius: 5px;
             font-style: italic;
-            max-height: 200px;
+            max-height: 250px;
             overflow-y: auto;
         }
 
-        /* Floating Animation */
+        /* Floating Animation Elements */
         .floating-element {
             position: absolute;
             opacity: 0;
             z-index: 1;
-            animation: floatUp 4s linear infinite;
+            animation: floatUp 5s linear infinite;
+        }
+
+        /* Custom styling for floating photos */
+        .floating-photo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            object-fit: cover;
         }
 
         @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+            0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-15vh) scale(1.3) rotate(360deg); opacity: 0; }
         }
 
         /* Test Button at Bottom */
@@ -129,7 +139,6 @@
 
     <div id="elements-container"></div>
 
-    <!-- STAGE 1: COUNTDOWN -->
     <div id="stage1" class="card">
         <h1>The Countdown Has Begun! ✨</h1>
         <p>Duniya ki sabse pyaari ladki ka birthday aane wala hai! Sabr ka phal meetha hota hai, thoda sa wait aur... ❤️</p>
@@ -144,7 +153,6 @@
         <button id="entry-btn" class="btn hidden" onclick="nextStage(1, 2)">Unlock Your Surprise! 🎉</button>
     </div>
 
-    <!-- STAGE 2: CAKE CUTTING -->
     <div id="stage2" class="card hidden">
         <h1>Happy Birthday My Love! 🎂</h1>
         <p>Chalo sabse pehle cake cut karte hain! Niche bane cake par click karke moombatti (candles) bujhao! 😘</p>
@@ -152,7 +160,6 @@
         <div id="cake-instruction" style="color: #777; margin-top: 10px; font-size: 14px;">(Click on the cake)</div>
     </div>
 
-    <!-- STAGE 3: GIFT HUNT -->
     <div id="stage3" class="card hidden">
         <h1>The Great Gift Hunt! 🎁</h1>
         <p>Maine tumhare liye bohot saare gifts chupaye hain, par asli surprise sirf **ek** box mein hai! Chalo dhoodho apna asli gift:</p>
@@ -165,10 +172,9 @@
         </div>
     </div>
 
-    <!-- STAGE 4: LOVE LETTER -->
     <div id="stage4" class="card hidden">
         <h1>You Found It! 🏆❤️</h1>
-        <p>Chalo, saare nakli gifts ko piche chodte hue tumne asli gift dhoodh hi liya. Yeh tumhare liye ek chota sa message meri taraf se:</p>
+        <p>Chalo, saare nakli gifts ko piche chodte hue tumne asli gift dhoodh hi liya. Yeh tumhare liye ek chota sa message aur hamari yaadein:</p>
         
         <div class="letter">
             <p>Hey Birthday Girl, ❤️</p>
@@ -176,10 +182,9 @@
             <p>Tumhara gussa hona, tumhara smile karna, sab kuch mere liye bohot special hai. May this birthday bring you everything you've ever wished for. Success, happiness, aur mera bohot saara pyaar!</p>
             <p>Happy Birthday, My Lifeline! 🎂🎉🥰</p>
         </div>
-        <p style="font-size: 30px; margin: 10px 0 0 0;">✨🎈🎈🍰</p>
+        <p style="font-size: 14px; color: #ff4b5c; margin-top: 10px; font-weight: bold;">Look around! Hamari pyaari photos float kar rhi hain background mein! ✨</p>
     </div>
 
-    <!-- Secret testing button for you -->
     <button class="test-btn" onclick="bypassCountdown()">Admin: Test Game</button>
 
     <script>
@@ -222,7 +227,6 @@
             document.getElementById('cake-emoji').innerText = "🍰✨";
             document.getElementById('cake-instruction').innerHTML = "<b style='color: #28a745;'>Candles Blown! 🎈</b>";
             
-            // Start bursting balloons
             startBalloons();
 
             setTimeout(() => {
@@ -231,51 +235,73 @@
             }, 1500);
         }
 
-        // Stage 3: Gift Hunt Logic
-        // Let's assume Box number 3 is the real gift!
+        // Stage 3: Gift Hunt Logic (Rigged so she has to find Box 3)
         function tryGift(boxNumber) {
             if(boxNumber === 3) {
                 alert("BINGO! 🎉 Tumne sahi box chunna! Isme hai tumhara sabse keemti gift...");
                 nextStage(3, 4);
-                startHearts();
+                startHeartsAndPhotos(); // Starts romantic floating stage
             } else if(boxNumber === 1) {
-                alert("❌ Is box mein toh sirf mera bohot saara gussa aur 100 flying kisses hain! Dusra try karo. 😘");
+                alert("Wrong Answer! ❌\n\nPar koi baat nahi 😘 Dusra choose karo jab tak sahi nahi hota!");
             } else if(boxNumber === 2) {
-                alert("❌ Ohho! Isme toh khali chocolate ka wrapper nikla. Try again! 🍫");
+                alert("Ohho galat box! ❌\n\nPar koi baat nahi 😘 Dusra choose karo jab tak sahi nahi hota!");
             } else {
-                alert("❌ Is wale mein ek coupon hai: 'Mujhe ek hug dena padega'. Par asli gift abhi bhi bacha hai! Try another one. 🤗");
+                alert("Yeh bhi khali nikla! ❌\n\nPar koi baat nahi 😘 Dusra choose karo jab tak sahi nahi hota!");
             }
         }
 
-        // Helper: Bypass countdown for testing
         function bypassCountdown() {
             nextStage(1, 2);
         }
 
         // Floating Animations Generator
-        function spawnElement(emoji, className) {
+        function spawnElement(content, isImage = false) {
             const container = document.getElementById('elements-container');
             const el = document.createElement('div');
-            el.classList.add('floating-element', className);
-            el.innerHTML = emoji;
-            el.style.left = Math.random() * 100 + 'vw';
-            el.style.animationDuration = Math.random() * 2 + 3 + 's';
-            el.style.fontSize = Math.random() * 20 + 20 + 'px';
+            el.classList.add('floating-element');
+            
+            if (isImage) {
+                const img = document.createElement('img');
+                img.src = content;
+                img.classList.add('floating-photo');
+                // If image fails to load, fallback to a heart emoji so it doesn't look broken
+                img.onerror = function() { el.innerHTML = "❤️"; };
+                el.appendChild(img);
+            } else {
+                el.innerHTML = content;
+                el.style.fontSize = Math.random() * 20 + 20 + 'px';
+            }
+            
+            el.style.left = Math.random() * 90 + 'vw';
+            el.style.animationDuration = Math.random() * 3 + 4 + 's'; // 4 to 7 seconds
             container.appendChild(el);
-            setTimeout(() => { el.remove(); }, 4000);
+            setTimeout(() => { el.remove(); }, 6000);
         }
 
-        let balloonInterval, heartInterval;
+        let balloonInterval, heartInterval, photoInterval;
+        
         function startBalloons() {
             balloonInterval = setInterval(() => {
                 const balloons = ['🎈', '🎉', '✨'];
-                spawnElement(balloons[Math.floor(Math.random() * balloons.length)], 'balloon');
+                spawnElement(balloons[Math.floor(Math.random() * balloons.length)]);
             }, 300);
             setTimeout(() => clearInterval(balloonInterval), 5000);
         }
 
-        function startHearts() {
-            heartInterval = setInterval(() => { spawnElement('❤️', 'heart'); }, 300);
+        function startHeartsAndPhotos() {
+            // 1. Pink Hearts float permanently in the background
+            heartInterval = setInterval(() => { 
+                const hearts = ['❤️', '💖', '💕', '🌸'];
+                spawnElement(hearts[Math.floor(Math.random() * hearts.length)]); 
+            }, 400);
+
+            // 2. Photos float alongside the hearts (Assumes photos named photo1.jpg to photo5.jpg are uploaded on GitHub)
+            let photoCount = 1;
+            photoInterval = setInterval(() => {
+                spawnElement(`photo${photoCount}.jpg`, true);
+                photoCount++;
+                if(photoCount > 5) photoCount = 1; // Loops from photo1 to photo5
+            }, 1200); // Spawns a photo every 1.2 seconds
         }
     </script>
 </body>
