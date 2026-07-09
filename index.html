@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Lifeline! ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffe3e3 0%, #ffd1d1 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 { color: #ff4b5c; margin-bottom: 10px; font-size: 24px; }
+        p { color: #555; font-size: 16px; line-height: 1.6; }
+
+        .countdown-box {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            background: #fff0f0;
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .time-unit { font-size: 20px; font-weight: bold; color: #ff4b5c; }
+        .time-label { font-size: 11px; color: #777; display: block; }
+
+        .btn {
+            background: #ff4b5c;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            margin: 15px 0 0 0;
+            font-weight: bold;
+        }
+
+        .btn:hover { transform: scale(1.05); background: #ff2a3f; }
+        .hidden { display: none; }
+
+        /* Cake Styling */
+        .cake { font-size: 80px; cursor: pointer; display: inline-block; transition: transform 0.3s; }
+        .cake:hover { transform: scale(1.1); }
+
+        /* Gift Hunt Grid */
+        .gift-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gift-box {
+            font-size: 50px;
+            background: #fff0f0;
+            padding: 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            border: 2px dashed #ffb3b3;
+        }
+
+        .gift-box:hover { transform: scale(1.05); background: #ffe1e1; }
+
+        /* Letter Box */
+        .letter {
+            background: #fff8f8;
+            border-left: 5px solid #ff4b5c;
+            padding: 15px;
+            text-align: left;
+            border-radius: 5px;
+            font-style: italic;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        /* Floating Animation */
+        .floating-element {
+            position: absolute;
+            opacity: 0;
+            z-index: 1;
+            animation: floatUp 4s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Test Button at Bottom */
+        .test-btn {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="elements-container"></div>
+
+    <!-- STAGE 1: COUNTDOWN -->
+    <div id="stage1" class="card">
+        <h1>The Countdown Has Begun! ✨</h1>
+        <p>Duniya ki sabse pyaari ladki ka birthday aane wala hai! Sabr ka phal meetha hota hai, thoda sa wait aur... ❤️</p>
+        
+        <div class="countdown-box">
+            <div><span id="days" class="time-unit">00</span><span class="time-label">Days</span></div>
+            <div><span id="hours" class="time-unit">00</span><span class="time-label">Hours</span></div>
+            <div><span id="minutes" class="time-unit">00</span><span class="time-label">Mins</span></div>
+            <div><span id="seconds" class="time-unit">00</span><span class="time-label">Secs</span></div>
+        </div>
+        <div id="unlock-msg" style="color: #ff4b5c; font-weight: bold;">🔒 Locked until 23rd July midnight!</div>
+        <button id="entry-btn" class="btn hidden" onclick="nextStage(1, 2)">Unlock Your Surprise! 🎉</button>
+    </div>
+
+    <!-- STAGE 2: CAKE CUTTING -->
+    <div id="stage2" class="card hidden">
+        <h1>Happy Birthday My Love! 🎂</h1>
+        <p>Chalo sabse pehle cake cut karte hain! Niche bane cake par click karke moombatti (candles) bujhao! 😘</p>
+        <div class="cake" id="cake-emoji" onclick="cutCake()">🎂</div>
+        <div id="cake-instruction" style="color: #777; margin-top: 10px; font-size: 14px;">(Click on the cake)</div>
+    </div>
+
+    <!-- STAGE 3: GIFT HUNT -->
+    <div id="stage3" class="card hidden">
+        <h1>The Great Gift Hunt! 🎁</h1>
+        <p>Maine tumhare liye bohot saare gifts chupaye hain, par asli surprise sirf **ek** box mein hai! Chalo dhoodho apna asli gift:</p>
+        
+        <div class="gift-container">
+            <div class="gift-box" onclick="tryGift(1)">🎁</div>
+            <div class="gift-box" onclick="tryGift(2)">🎁</div>
+            <div class="gift-box" onclick="tryGift(3)">🎁</div>
+            <div class="gift-box" onclick="tryGift(4)">🎁</div>
+        </div>
+    </div>
+
+    <!-- STAGE 4: LOVE LETTER -->
+    <div id="stage4" class="card hidden">
+        <h1>You Found It! 🏆❤️</h1>
+        <p>Chalo, saare nakli gifts ko piche chodte hue tumne asli gift dhoodh hi liya. Yeh tumhare liye ek chota sa message meri taraf se:</p>
+        
+        <div class="letter">
+            <p>Hey Birthday Girl, ❤️</p>
+            <p>23 July ko jab tum is duniya mein aayi thin, toh kisi ko nahi pata tha ki tum ek din kisi ki poori duniya ban jaogi. Main bohot lucky hoon ki tum meri life mein ho.</p>
+            <p>Tumhara gussa hona, tumhara smile karna, sab kuch mere liye bohot special hai. May this birthday bring you everything you've ever wished for. Success, happiness, aur mera bohot saara pyaar!</p>
+            <p>Happy Birthday, My Lifeline! 🎂🎉🥰</p>
+        </div>
+        <p style="font-size: 30px; margin: 10px 0 0 0;">✨🎈🎈🍰</p>
+    </div>
+
+    <!-- Secret testing button for you -->
+    <button class="test-btn" onclick="bypassCountdown()">Admin: Test Game</button>
+
+    <script>
+        // Set target date to July 23, 2026 00:00:00
+        const bdayTime = new Date("July 23, 2026 00:00:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const diff = bdayTime - now;
+
+            if (diff <= 0) {
+                clearInterval(timer);
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+                document.getElementById("unlock-msg").classList.add("hidden");
+                document.getElementById("entry-btn").classList.remove("hidden");
+                return;
+            }
+
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = d < 10 ? "0" + d : d;
+            document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
+            document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
+            document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
+        }, 1000);
+
+        function nextStage(current, next) {
+            document.getElementById('stage' + current).classList.add('hidden');
+            document.getElementById('stage' + next).classList.remove('hidden');
+        }
+
+        // Stage 2: Cake Cut
+        function cutCake() {
+            document.getElementById('cake-emoji').innerText = "🍰✨";
+            document.getElementById('cake-instruction').innerHTML = "<b style='color: #28a745;'>Candles Blown! 🎈</b>";
+            
+            // Start bursting balloons
+            startBalloons();
+
+            setTimeout(() => {
+                alert("Yay! Cake cut ho gaya. Ab chalte hain aapke gifts ki taraf! 😉");
+                nextStage(2, 3);
+            }, 1500);
+        }
+
+        // Stage 3: Gift Hunt Logic
+        // Let's assume Box number 3 is the real gift!
+        function tryGift(boxNumber) {
+            if(boxNumber === 3) {
+                alert("BINGO! 🎉 Tumne sahi box chunna! Isme hai tumhara sabse keemti gift...");
+                nextStage(3, 4);
+                startHearts();
+            } else if(boxNumber === 1) {
+                alert("❌ Is box mein toh sirf mera bohot saara gussa aur 100 flying kisses hain! Dusra try karo. 😘");
+            } else if(boxNumber === 2) {
+                alert("❌ Ohho! Isme toh khali chocolate ka wrapper nikla. Try again! 🍫");
+            } else {
+                alert("❌ Is wale mein ek coupon hai: 'Mujhe ek hug dena padega'. Par asli gift abhi bhi bacha hai! Try another one. 🤗");
+            }
+        }
+
+        // Helper: Bypass countdown for testing
+        function bypassCountdown() {
+            nextStage(1, 2);
+        }
+
+        // Floating Animations Generator
+        function spawnElement(emoji, className) {
+            const container = document.getElementById('elements-container');
+            const el = document.createElement('div');
+            el.classList.add('floating-element', className);
+            el.innerHTML = emoji;
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.animationDuration = Math.random() * 2 + 3 + 's';
+            el.style.fontSize = Math.random() * 20 + 20 + 'px';
+            container.appendChild(el);
+            setTimeout(() => { el.remove(); }, 4000);
+        }
+
+        let balloonInterval, heartInterval;
+        function startBalloons() {
+            balloonInterval = setInterval(() => {
+                const balloons = ['🎈', '🎉', '✨'];
+                spawnElement(balloons[Math.floor(Math.random() * balloons.length)], 'balloon');
+            }, 300);
+            setTimeout(() => clearInterval(balloonInterval), 5000);
+        }
+
+        function startHearts() {
+            heartInterval = setInterval(() => { spawnElement('❤️', 'heart'); }, 300);
+        }
+    </script>
+</body>
+</html>
