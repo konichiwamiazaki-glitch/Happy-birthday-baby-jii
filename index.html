@@ -3,307 +3,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday My Lifeline! ❤️</title>
+    <title>Made For My Lifeline ❤️</title>
     <style>
+        :root {
+            --pink-bg: #ffeef2;
+            --pink-card: #fff5f7;
+            --pink-accent: #ff7893;
+            --pink-dark: #ff4b72;
+            --text-color: #63434a;
+        }
+
         body {
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ffe3e3 0%, #ffd1d1 100%);
+            background-color: var(--pink-bg);
+            background-image: radial-gradient(#ffdae3 15%, transparent 15%);
+            background-size: 20px 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow: hidden;
+            color: var(--text-color);
         }
 
-        .card {
+        .music-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
             background: white;
-            padding: 30px;
+            border: 2px solid var(--pink-accent);
+            color: var(--pink-dark);
+            padding: 5px 12px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .card-container {
+            background: white;
+            padding: 25px;
+            border-radius: 24px;
+            box-shadow: 0 12px 40px rgba(255, 120, 147, 0.15);
             text-align: center;
-            max-width: 420px;
-            width: 90%;
+            max-width: 440px;
+            width: 88%;
             position: relative;
-            z-index: 2;
+            z-index: 10;
+            border: 4px solid #fff;
         }
 
-        h1 { color: #ff4b5c; margin-bottom: 10px; font-size: 24px; }
-        p { color: #555; font-size: 16px; line-height: 1.6; }
-
-        .countdown-box {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-            background: #fff0f0;
-            padding: 15px;
-            border-radius: 15px;
-        }
-
-        .time-unit { font-size: 20px; font-weight: bold; color: #ff4b5c; }
-        .time-label { font-size: 11px; color: #777; display: block; }
+        h1 { font-size: 22px; color: var(--pink-dark); margin-top: 0; }
+        p { font-size: 14px; line-height: 1.5; color: var(--text-color); }
 
         .btn {
-            background: #ff4b5c;
+            background: var(--pink-dark);
             color: white;
             border: none;
-            padding: 12px 25px;
-            font-size: 16px;
+            padding: 12px 30px;
+            font-size: 15px;
             border-radius: 25px;
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-            margin: 15px 0 0 0;
             font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(255, 75, 114, 0.3);
         }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(255, 75, 114, 0.4); }
 
-        .btn:hover { transform: scale(1.05); background: #ff2a3f; }
-        .hidden { display: none; }
+        .hidden { display: none !important; }
 
-        /* Cake Styling */
-        .cake { font-size: 80px; cursor: pointer; display: inline-block; transition: transform 0.3s; }
-        .cake:hover { transform: scale(1.1); }
-
-        /* Gift Hunt Grid */
-        .gift-container {
+        .grid-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin-top: 20px;
         }
 
-        .gift-box {
-            font-size: 50px;
-            background: #fff0f0;
-            padding: 15px;
-            border-radius: 15px;
+        .menu-item {
+            background: var(--pink-card);
+            border: 2px dashed var(--pink-accent);
+            border-radius: 16px;
+            padding: 20px 10px;
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-            border: 2px dashed #ffb3b3;
+            transition: all 0.2s ease;
         }
+        .menu-item:hover { transform: scale(1.03); background: #ffeeef; }
+        .menu-item .icon { font-size: 38px; margin-bottom: 5px; display: block; }
+        .menu-item .label { font-size: 12px; font-weight: bold; color: var(--pink-dark); }
 
-        .gift-box:hover { transform: scale(1.05); background: #ffe1e1; }
+        .content-box { text-align: center; animation: fadeIn 0.5s ease; }
+        .back-btn { background: none; border: none; color: var(--pink-accent); font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 13px; }
 
-        /* Letter Box */
-        .letter {
-            background: #fff8f8;
-            border-left: 5px solid #ff4b5c;
-            padding: 15px;
-            text-align: left;
-            border-radius: 5px;
-            font-style: italic;
-            max-height: 250px;
-            overflow-y: auto;
+        .polaroid-stack {
+            position: relative;
+            height: 220px;
+            margin: 20px auto;
+            width: 180px;
         }
-
-        /* Floating Animation Elements */
-        .floating-element {
+        .polaroid {
+            background: white;
+            padding: 10px 10px 25px 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+            border-radius: 4px;
             position: absolute;
-            opacity: 0;
-            z-index: 1;
-            animation: floatUp 5s linear infinite;
+            width: 100%;
+            box-sizing: border-box;
+            transition: transform 0.5s ease, opacity 0.5s ease;
         }
+        .polaroid img { width: 100%; height: 140px; object-fit: cover; border-radius: 2px; }
 
-        /* Custom styling for floating photos */
-        .floating-photo {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            object-fit: cover;
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 120, 147, 0.4);
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 6s linear infinite;
         }
 
         @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-15vh) scale(1.3) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(110vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
-
-        /* Test Button at Bottom */
-        .test-btn {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            font-size: 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 10;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div id="elements-container"></div>
+    <audio id="bg-music" loop>
+        <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-500.mp3" type="audio/mpeg">
+    </audio>
+    <button class="music-btn" onclick="toggleMusic()">🎵 Play Our Song</button>
 
-    <div id="stage1" class="card">
-        <h1>The Countdown Has Begun! ✨</h1>
-        <p>Duniya ki sabse pyaari ladki ka birthday aane wala hai! Sabr ka phal meetha hota hai, thoda sa wait aur... ❤️</p>
-        
-        <div class="countdown-box">
-            <div><span id="days" class="time-unit">00</span><span class="time-label">Days</span></div>
-            <div><span id="hours" class="time-unit">00</span><span class="time-label">Hours</span></div>
-            <div><span id="minutes" class="time-unit">00</span><span class="time-label">Mins</span></div>
-            <div><span id="seconds" class="time-unit">00</span><span class="time-label">Secs</span></div>
-        </div>
-        <div id="unlock-msg" style="color: #ff4b5c; font-weight: bold;">🔒 Locked until 23rd July midnight!</div>
-        <button id="entry-btn" class="btn hidden" onclick="nextStage(1, 2)">Unlock Your Surprise! 🎉</button>
-    </div>
+    <div id="hearts-bg"></div>
 
-    <div id="stage2" class="card hidden">
-        <h1>Happy Birthday My Love! 🎂</h1>
-        <p>Chalo sabse pehle cake cut karte hain! Niche bane cake par click karke moombatti (candles) bujhao! 😘</p>
-        <div class="cake" id="cake-emoji" onclick="cutCake()">🎂</div>
-        <div id="cake-instruction" style="color: #777; margin-top: 10px; font-size: 14px;">(Click on the cake)</div>
-    </div>
-
-    <div id="stage3" class="card hidden">
-        <h1>The Great Gift Hunt! 🎁</h1>
-        <p>Maine tumhare liye bohot saare gifts chupaye hain, par asli surprise sirf **ek** box mein hai! Chalo dhoodho apna asli gift:</p>
-        
-        <div class="gift-container">
-            <div class="gift-box" onclick="tryGift(1)">🎁</div>
-            <div class="gift-box" onclick="tryGift(2)">🎁</div>
-            <div class="gift-box" onclick="tryGift(3)">🎁</div>
-            <div class="gift-box" onclick="tryGift(4)">🎁</div>
+    <!-- STAGE 1: ASK QUESTION -->
+    <div id="stage1" class="card-container">
+        <div style="font-size: 50px; margin-bottom: 10px;">🐱</div>
+        <h1>Hey Beautiful! 💕</h1>
+        <p>Do you want to see your special birthday surprise?</p>
+        <div style="margin-top: 25px; display: flex; justify-content: center; gap: 15px;">
+            <button class="btn" onclick="goToMenu()">YES PLEASE 💖</button>
+            <button class="btn" style="background:#d4b2b8; box-shadow:none;" onclick="alert('Arre! Aise kaise NO? Chal jhoothi, YES par click karo! 😉')">NO THANKS</button>
         </div>
     </div>
 
-    <div id="stage4" class="card hidden">
-        <h1>You Found It! 🏆❤️</h1>
-        <p>Chalo, saare nakli gifts ko piche chodte hue tumne asli gift dhoodh hi liya. Yeh tumhare liye ek chota sa message aur hamari yaadein:</p>
+    <!-- STAGE 2: MAIN GRID MENU -->
+    <div id="stage2" class="card-container hidden">
+        <h1>Made Just For You ✨</h1>
+        <p>Tap a card to open your surprise</p>
         
-        <div class="letter">
+        <div class="grid-container">
+            <div class="menu-item" onclick="showSection('photos')">
+                <span class="icon">📸</span>
+                <span class="label">Captured Memories</span>
+            </div>
+            <div class="menu-item" onclick="showSection('letter')">
+                <span class="icon">💌</span>
+                <span class="label">Love Letter</span>
+            </div>
+            <div class="menu-item" onclick="showSection('bouquet')">
+                <span class="icon">💐</span>
+                <span class="label">Bouquet For You</span>
+            </div>
+            <div class="menu-item" onclick="showSection('future')">
+                <span class="icon">🧸</span>
+                <span class="label">Our Future Plans</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHOTO GALLERY SECTION -->
+    <div id="sec-photos" class="card-container hidden content-box">
+        <h1>Our Memories 🎞️</h1>
+        <p>Tap the photo to see the next one!</p>
+        <div class="polaroid-stack" onclick="nextPhoto()">
+            <!-- Sabhi double extension naamo ko handle kiya gaya hai -->
+            <div class="polaroid" id="p7"><img src="photo7.jpg.JPG"></div>
+            <div class="polaroid" id="p6"><img src="photo6.jpg.JPG"></div>
+            <div class="polaroid" id="p5"><img src="photo5.jpg.JPG"></div>
+            <div class="polaroid" id="p4"><img src="photo4.jpg.PNG"></div>
+            <div class="polaroid" id="p3"><img src="photo3.jpg.PNG"></div>
+            <div class="polaroid" id="p2"><img src="photo2.jpg.JPG"></div>
+            <div class="polaroid" id="p1"><img src="photo1.jpg.JPG"></div>
+        </div>
+        <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
+    </div>
+
+    <!-- LOVE LETTER SECTION -->
+    <div id="sec-letter" class="card-container hidden content-box">
+        <h1>For You, Always 💌</h1>
+        <div style="background: var(--pink-card); padding: 15px; border-radius: 12px; text-align: left; font-style: italic; max-height: 220px; overflow-y: auto; font-size: 13.5px; border: 1px solid #ffd3dd;">
             <p>Hey Birthday Girl, ❤️</p>
             <p>23 July ko jab tum is duniya mein aayi thin, toh kisi ko nahi pata tha ki tum ek din kisi ki poori duniya ban jaogi. Main bohot lucky hoon ki tum meri life mein ho.</p>
             <p>Tumhara gussa hona, tumhara smile karna, sab kuch mere liye bohot special hai. May this birthday bring you everything you've ever wished for. Success, happiness, aur mera bohot saara pyaar!</p>
             <p>Happy Birthday, My Lifeline! 🎂🎉🥰</p>
         </div>
-        <p style="font-size: 14px; color: #ff4b5c; margin-top: 10px; font-weight: bold;">Look around! Hamari pyaari photos float kar rhi hain background mein! ✨</p>
+        <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
     </div>
 
-    <button class="test-btn" onclick="bypassCountdown()">Admin: Test Game</button>
+    <!-- BOUQUET SECTION -->
+    <div id="sec-bouquet" class="card-container hidden content-box">
+        <h1>A Special Bouquet 💐</h1>
+        <div style="font-size: 70px; margin: 15px 0;">💐✨🌹</div>
+        <p style="font-weight: bold; color: var(--pink-dark);">"You make my world brighter just by being in it."</p>
+        <p>Yeh pyaare phool duniya ki sabse pyaari ladki ke liye. Hamesha aise hi muskurati rehna! 😘</p>
+        <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
+    </div>
+
+    <!-- FUTURE PLANS SECTION -->
+    <div id="sec-future" class="card-container hidden content-box">
+        <h1>Our Future Plans ☁️</h1>
+        <div style="background: var(--pink-card); padding: 15px; border-radius: 12px; font-size: 14px; text-align: left; border: 1px solid #ffd3dd;">
+            📌 <b>One Day:</b> No more screens between us, just you and me. ❤️<br><br>
+            📌 <b>Our Dream:</b> A cute little home filled with countless late-night talks and smiles.<br><br>
+            📌 <b>Promise:</b> I will always stand by you, through every single phase of life. ✨
+        </div>
+        <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
+    </div>
 
     <script>
-        // Set target date to July 23, 2026 00:00:00
-        const bdayTime = new Date("July 23, 2026 00:00:00").getTime();
-
-        const timer = setInterval(function() {
-            const now = new Date().getTime();
-            const diff = bdayTime - now;
-
-            if (diff <= 0) {
-                clearInterval(timer);
-                document.getElementById("days").innerText = "00";
-                document.getElementById("hours").innerText = "00";
-                document.getElementById("minutes").innerText = "00";
-                document.getElementById("seconds").innerText = "00";
-                document.getElementById("unlock-msg").classList.add("hidden");
-                document.getElementById("entry-btn").classList.remove("hidden");
-                return;
-            }
-
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = d < 10 ? "0" + d : d;
-            document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
-            document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
-            document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
-        }, 1000);
-
-        function nextStage(current, next) {
-            document.getElementById('stage' + current).classList.add('hidden');
-            document.getElementById('stage' + next).classList.remove('hidden');
-        }
-
-        // Stage 2: Cake Cut
-        function cutCake() {
-            document.getElementById('cake-emoji').innerText = "🍰✨";
-            document.getElementById('cake-instruction').innerHTML = "<b style='color: #28a745;'>Candles Blown! 🎈</b>";
-            
-            startBalloons();
-
-            setTimeout(() => {
-                alert("Yay! Cake cut ho gaya. Ab chalte hain aapke gifts ki taraf! 😉");
-                nextStage(2, 3);
-            }, 1500);
-        }
-
-        // Stage 3: Gift Hunt Logic
-        function tryGift(boxNumber) {
-            if(boxNumber === 3) {
-                alert("BINGO! 🎉 Tumne sahi box chunna! Isme hai tumhara sabse keemti gift...");
-                nextStage(3, 4);
-                startHeartsAndPhotos();
+        function toggleMusic() {
+            const music = document.getElementById('bg-music');
+            const btn = document.querySelector('.music-btn');
+            if (music.paused) {
+                music.play().catch(e => console.log("Audio play touch required"));
+                btn.innerText = "⏸️ Pause Song";
             } else {
-                alert("Wrong Answer! ❌\n\nPar koi baat nahi 😘 Dusra choose karo jab tak sahi nahi hota!");
+                music.pause();
+                btn.innerText = "🎵 Play Our Song";
             }
         }
 
-        function bypassCountdown() {
-            nextStage(1, 2);
-        }
-
-        // Floating Animations Generator
-        function spawnElement(content, isImage = false) {
-            const container = document.getElementById('elements-container');
-            const el = document.createElement('div');
-            el.classList.add('floating-element');
-            
-            if (isImage) {
-                const img = document.createElement('img');
-                img.src = content;
-                img.classList.add('floating-photo');
-                img.onerror = function() { el.innerHTML = "❤️"; };
-                el.appendChild(img);
-            } else {
-                el.innerHTML = content;
-                el.style.fontSize = Math.random() * 20 + 20 + 'px';
-            }
-            
-            el.style.left = Math.random() * 90 + 'vw';
-            el.style.animationDuration = Math.random() * 3 + 4 + 's';
-            container.appendChild(el);
-            setTimeout(() => { el.remove(); }, 6000);
-        }
-
-        let balloonInterval, heartInterval, photoInterval;
-        
-        function startBalloons() {
-            balloonInterval = setInterval(() => {
-                const balloons = ['🎈', '🎉', '✨'];
-                spawnElement(balloons[Math.floor(Math.random() * balloons.length)]);
-            }, 300);
-            setTimeout(() => clearInterval(balloonInterval), 5000);
-        }
-
-        function startHeartsAndPhotos() {
-            // 1. Pink Hearts float permanently
-            heartInterval = setInterval(() => { 
-                const hearts = ['❤️', '💖', '💕', '🌸'];
-                spawnElement(hearts[Math.floor(Math.random() * hearts.length)]); 
+        function createHearts() {
+            const bg = document.getElementById('hearts-bg');
+            const hearts = ['❤️', '💖', '💕', '🌸', '✨'];
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = Math.random() * 15 + 12 + 'px';
+                heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+                bg.appendChild(heart);
+                setTimeout(() => heart.remove(), 6000);
             }, 400);
+        }
+        window.onload = createHearts;
 
-            // 2. Photos loop based on GitHub uploaded names (handling double extension)
-            let photoCount = 1;
-            photoInterval = setInterval(() => {
-                if (photoCount === 1) {
-                    spawnElement(`photo1.jpg`, true);
-                } else if (photoCount === 3 || photoCount === 4) {
-                    spawnElement(`photo${photoCount}.jpg.PNG`, true);
-                } else {
-                    spawnElement(`photo${photoCount}.jpg.JPG`, true);
+        function goToMenu() {
+            document.getElementById('stage1').classList.add('hidden');
+            document.getElementById('stage2').classList.remove('hidden');
+            document.getElementById('bg-music').play().then(() => {
+                document.querySelector('.music-btn').innerText = "⏸️ Pause Song";
+            }).catch(() => {});
+        }
+
+        function showSection(secId) {
+            document.getElementById('stage2').classList.add('hidden');
+            document.getElementById('sec-' + secId).classList.remove('hidden');
+            if(secId === 'photos') resetPhotos();
+        }
+
+        function backToMenu() {
+            const sections = ['photos', 'letter', 'bouquet', 'future'];
+            sections.forEach(sec => document.getElementById('sec-' + sec).classList.add('hidden'));
+            document.getElementById('stage2').classList.remove('hidden');
+        }
+
+        let currentPhotoIndex = 1;
+        function nextPhoto() {
+            if(currentPhotoIndex <= 7) {
+                const currentCard = document.getElementById('p' + currentPhotoIndex);
+                if(currentCard) {
+                    currentCard.style.transform = 'translateY(-150%) rotate(' + (Math.random() * 20 - 10) + 'deg)';
+                    currentCard.style.opacity = '0';
                 }
+                currentPhotoIndex++;
+            }
+            if(currentPhotoIndex > 7) {
+                setTimeout(() => {
+                    resetPhotos();
+                }, 600);
+            }
+        }
 
-                photoCount++;
-                if(photoCount > 7) photoCount = 1;
-            }, 1200);
+        function resetPhotos() {
+            currentPhotoIndex = 1;
+            for(let i = 1; i <= 7; i++) {
+                const card = document.getElementById('p' + i);
+                if(card) {
+                    card.style.transform = 'rotate(' + (Math.random() * 12 - 6) + 'deg)';
+                    card.style.opacity = '1';
+                }
+            }
         }
     </script>
 </body>
