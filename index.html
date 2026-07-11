@@ -103,6 +103,7 @@
             height: 220px;
             margin: 20px auto;
             width: 180px;
+            cursor: pointer;
         }
         .polaroid {
             background: white;
@@ -136,8 +137,9 @@
 </head>
 <body>
 
-    <audio id="bg-music" loop>
-        <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-500.mp3" type="audio/mpeg">
+    <!-- Working Romantic Background Music Link -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
     <button class="music-btn" onclick="toggleMusic()">🎵 Play Our Song</button>
 
@@ -184,7 +186,7 @@
         <h1>Our Memories 🎞️</h1>
         <p>Tap the photo to see the next one!</p>
         <div class="polaroid-stack" onclick="nextPhoto()">
-            <!-- Sabhi double extension naamo ko handle kiya gaya hai -->
+            <!-- Exact file names matched from your repository -->
             <div class="polaroid" id="p7"><img src="photo7.jpg.JPG"></div>
             <div class="polaroid" id="p6"><img src="photo6.jpg.JPG"></div>
             <div class="polaroid" id="p5"><img src="photo5.jpg.JPG"></div>
@@ -233,7 +235,7 @@
             const music = document.getElementById('bg-music');
             const btn = document.querySelector('.music-btn');
             if (music.paused) {
-                music.play().catch(e => console.log("Audio play touch required"));
+                music.play().catch(e => console.log("Audio play error:", e));
                 btn.innerText = "⏸️ Pause Song";
             } else {
                 music.pause();
@@ -260,9 +262,10 @@
         function goToMenu() {
             document.getElementById('stage1').classList.add('hidden');
             document.getElementById('stage2').classList.remove('hidden');
-            document.getElementById('bg-music').play().then(() => {
+            const music = document.getElementById('bg-music');
+            music.play().then(() => {
                 document.querySelector('.music-btn').innerText = "⏸️ Pause Song";
-            }).catch(() => {});
+            }).catch(e => console.log("Auto-play blocked by browser. User needs to tap manually."));
         }
 
         function showSection(secId) {
