@@ -117,10 +117,11 @@
             width: 100%;
             height: 100%;
             box-sizing: border-box;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+            transition: transform 0.4s ease, opacity 0.4s ease;
             opacity: 0;
-            transform: scale(0.8) rotate(10deg);
+            transform: scale(0.9);
             pointer-events: none;
+            display: none; /* Hidden completely when not active */
         }
 
         .polaroid-slide.active {
@@ -128,6 +129,7 @@
             transform: scale(1) rotate(-2deg);
             pointer-events: auto;
             z-index: 2;
+            display: block; /* Only show active slide */
         }
 
         .polaroid-slide img { 
@@ -247,19 +249,19 @@
         </div>
     </div>
 
-    <!-- PHOTO GALLERY SECTION (Single Polaroid with Dynamic Slide/Quotes) -->
+    <!-- PHOTO GALLERY SECTION -->
     <div id="sec-photos" class="card-container hidden content-box">
         <h1>The Most Beautiful Girl 🎞️</h1>
         
         <div class="slider-wrapper">
-            <!-- Photos with correct extensions according to your repo -->
-            <div class="polaroid-slide active" id="slide-0"><img src="photo1.jpg.JPG"></div>
-            <div class="polaroid-slide" id="slide-1"><img src="photo2.jpg.JPG"></div>
-            <div class="polaroid-slide" id="slide-2"><img src="photo3.jpg.PNG"></div>
-            <div class="polaroid-slide" id="slide-3"><img src="photo4.jpg.PNG"></div>
-            <div class="polaroid-slide" id="slide-4"><img src="photo5.jpg.JPG"></div>
-            <div class="polaroid-slide" id="slide-5"><img src="photo6.jpg.JPG"></div>
-            <div class="polaroid-slide" id="slide-6"><img src="photo7.jpg.JPG"></div>
+            <!-- Strict lowercase and exact match check to prevent loading issues -->
+            <div class="polaroid-slide active" id="slide-0"><img src="./photo1.jpg.JPG"></div>
+            <div class="polaroid-slide" id="slide-1"><img src="./photo2.jpg.JPG"></div>
+            <div class="polaroid-slide" id="slide-2"><img src="./photo3.jpg.PNG"></div>
+            <div class="polaroid-slide" id="slide-3"><img src="./photo4.jpg.PNG"></div>
+            <div class="polaroid-slide" id="slide-4"><img src="./photo5.jpg.JPG"></div>
+            <div class="polaroid-slide" id="slide-5"><img src="./photo6.jpg.JPG"></div>
+            <div class="polaroid-slide" id="slide-6"><img src="./photo7.jpg.JPG"></div>
         </div>
 
         <!-- Dynamic Poetry Text Box -->
@@ -288,9 +290,8 @@
     <div id="sec-bouquet" class="card-container hidden content-box">
         <h1>A Special Bouquet For You 💐</h1>
         
-        <!-- Matches the uploaded bouquet image -->
         <div class="bouquet-frame">
-            <img src="flower.jpg.JPG" alt="Beautiful Bouquet">
+            <img src="./flower.jpg.JPG" alt="Beautiful Bouquet">
         </div>
 
         <p style="font-weight: bold; color: var(--pink-dark); margin-top: 15px;">"You make my world brighter just by being in it."</p>
@@ -310,7 +311,6 @@
     </div>
 
     <script>
-        // Quotes array to match each of the 7 photos
         const romanticQuotes = [
             "\"Your eyes hold the sparkle of a million stars... ✨\"",
             "\"Your smile heals the deepest of my scars. 💖\"",
@@ -325,21 +325,20 @@
         const totalSlides = 7;
 
         function nextSlide() {
-            // Hide previous active slide
+            // Hide current slide
             document.getElementById('slide-' + currentSlideIndex).classList.remove('active');
             
-            // Move to next index
+            // Go to next slide
             currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
             
-            // Show new active slide
+            // Show next slide
             document.getElementById('slide-' + currentSlideIndex).classList.add('active');
             
-            // Update the romantic quote below the photo
+            // Change poetry text
             document.getElementById('poetry-text').innerHTML = romanticQuotes[currentSlideIndex];
         }
 
         function resetSlider() {
-            // Reset back to photo 1
             for (let i = 0; i < totalSlides; i++) {
                 document.getElementById('slide-' + i).classList.remove('active');
             }
