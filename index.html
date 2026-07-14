@@ -98,17 +98,44 @@
         .content-box { text-align: center; animation: fadeIn 0.5s ease; }
         .back-btn { background: none; border: none; color: var(--pink-accent); font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 13px; }
 
-        .polaroid-single {
+        /* Smooth Slider Styles */
+        .slider-wrapper {
+            position: relative;
+            margin: 15px auto;
+            width: 210px;
+            height: 250px;
+            perspective: 1000px;
+        }
+
+        .polaroid-slide {
             background: white;
-            padding: 10px 10px 20px 10px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            padding: 10px 10px 25px 10px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
             border: 1px solid #eee;
             border-radius: 8px;
-            margin: 15px auto;
-            width: 200px;
-            transform: rotate(-2deg);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+            opacity: 0;
+            transform: scale(0.8) rotate(10deg);
+            pointer-events: none;
         }
-        .polaroid-single img { width: 100%; height: 160px; object-fit: cover; border-radius: 4px; }
+
+        .polaroid-slide.active {
+            opacity: 1;
+            transform: scale(1) rotate(-2deg);
+            pointer-events: auto;
+            z-index: 2;
+        }
+
+        .polaroid-slide img { 
+            width: 100%; 
+            height: 180px; 
+            object-fit: cover; 
+            border-radius: 4px; 
+        }
 
         .poetry-box {
             font-family: 'Georgia', serif;
@@ -121,7 +148,26 @@
             border-radius: 12px;
             margin-top: 15px;
             border-left: 3px solid var(--pink-accent);
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
+        .slider-btn {
+            background: var(--pink-accent);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 4px 8px rgba(255, 120, 147, 0.2);
+            transition: all 0.2s ease;
+        }
+        .slider-btn:hover { background: var(--pink-dark); transform: scale(1.05); }
 
         .bouquet-frame {
             background: white;
@@ -157,6 +203,7 @@
 </head>
 <body>
 
+    <!-- Background Music -->
     <audio id="bg-music" loop preload="auto">
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
@@ -164,6 +211,7 @@
 
     <div id="hearts-bg"></div>
 
+    <!-- STAGE 1: ASK QUESTION -->
     <div id="stage1" class="card-container">
         <div style="font-size: 50px; margin-bottom: 10px;">🐱</div>
         <h1>Hey Beautiful! 💕</h1>
@@ -174,6 +222,7 @@
         </div>
     </div>
 
+    <!-- STAGE 2: MAIN GRID MENU -->
     <div id="stage2" class="card-container hidden">
         <h1>Made Just For You ✨</h1>
         <p>Tap a card to open your surprise</p>
@@ -198,23 +247,32 @@
         </div>
     </div>
 
+    <!-- PHOTO GALLERY SECTION (Single Polaroid with Dynamic Slide/Quotes) -->
     <div id="sec-photos" class="card-container hidden content-box">
         <h1>The Most Beautiful Girl 🎞️</h1>
         
-        <div class="polaroid-single">
-            <img src="photo1.jpg.JPG">
+        <div class="slider-wrapper">
+            <!-- Photos with correct extensions according to your repo -->
+            <div class="polaroid-slide active" id="slide-0"><img src="photo1.jpg.JPG"></div>
+            <div class="polaroid-slide" id="slide-1"><img src="photo2.jpg.JPG"></div>
+            <div class="polaroid-slide" id="slide-2"><img src="photo3.jpg.PNG"></div>
+            <div class="polaroid-slide" id="slide-3"><img src="photo4.jpg.PNG"></div>
+            <div class="polaroid-slide" id="slide-4"><img src="photo5.jpg.JPG"></div>
+            <div class="polaroid-slide" id="slide-5"><img src="photo6.jpg.JPG"></div>
+            <div class="polaroid-slide" id="slide-6"><img src="photo7.jpg.JPG"></div>
         </div>
 
-        <div class="poetry-box">
-            "Your eyes hold the sparkle of a million stars, ✨<br>
-            Your smile heals the deepest of my scars. 💖<br>
-            With beauty so pure, and a heart so sweet, 🌸<br>
-            You make my life beautiful, happy, and complete." 👩‍❤️‍👨🌷
+        <!-- Dynamic Poetry Text Box -->
+        <div class="poetry-box" id="poetry-text">
+            "Your eyes hold the sparkle of a million stars, ✨"
         </div>
 
+        <button class="slider-btn" onclick="nextSlide()">Next Memory 💖</button>
+        <br>
         <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
     </div>
 
+    <!-- LOVE LETTER SECTION -->
     <div id="sec-letter" class="card-container hidden content-box">
         <h1>For You, Always 💌</h1>
         <div style="background: var(--pink-card); padding: 15px; border-radius: 12px; text-align: left; font-style: italic; max-height: 220px; overflow-y: auto; font-size: 13.5px; border: 1px solid #ffd3dd;">
@@ -226,9 +284,11 @@
         <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
     </div>
 
+    <!-- BOUQUET SECTION -->
     <div id="sec-bouquet" class="card-container hidden content-box">
         <h1>A Special Bouquet For You 💐</h1>
         
+        <!-- Matches the uploaded bouquet image -->
         <div class="bouquet-frame">
             <img src="flower.jpg.JPG" alt="Beautiful Bouquet">
         </div>
@@ -238,6 +298,7 @@
         <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
     </div>
 
+    <!-- FUTURE PLANS SECTION -->
     <div id="sec-future" class="card-container hidden content-box">
         <h1>Our Future Plans ☁️</h1>
         <div style="background: var(--pink-card); padding: 15px; border-radius: 12px; font-size: 14px; text-align: left; border: 1px solid #ffd3dd;">
@@ -249,6 +310,44 @@
     </div>
 
     <script>
+        // Quotes array to match each of the 7 photos
+        const romanticQuotes = [
+            "\"Your eyes hold the sparkle of a million stars... ✨\"",
+            "\"Your smile heals the deepest of my scars. 💖\"",
+            "\"With beauty so pure, and a heart so sweet... 🌸\"",
+            "\"You make my life beautiful, happy, and complete. 🌷\"",
+            "\"Every moment spent with you is like a beautiful dream come true. 💫\"",
+            "\"No matter where life takes us, my heart will always beat for you. 👩‍❤️‍👨\"",
+            "\"To the world's most special girl, a very Happy Birthday! 🎂💖✨\""
+        ];
+
+        let currentSlideIndex = 0;
+        const totalSlides = 7;
+
+        function nextSlide() {
+            // Hide previous active slide
+            document.getElementById('slide-' + currentSlideIndex).classList.remove('active');
+            
+            // Move to next index
+            currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+            
+            // Show new active slide
+            document.getElementById('slide-' + currentSlideIndex).classList.add('active');
+            
+            // Update the romantic quote below the photo
+            document.getElementById('poetry-text').innerHTML = romanticQuotes[currentSlideIndex];
+        }
+
+        function resetSlider() {
+            // Reset back to photo 1
+            for (let i = 0; i < totalSlides; i++) {
+                document.getElementById('slide-' + i).classList.remove('active');
+            }
+            currentSlideIndex = 0;
+            document.getElementById('slide-0').classList.add('active');
+            document.getElementById('poetry-text').innerHTML = romanticQuotes[0];
+        }
+
         function toggleMusic() {
             const music = document.getElementById('bg-music');
             const btn = document.querySelector('.music-btn');
@@ -289,6 +388,9 @@
         function showSection(secId) {
             document.getElementById('stage2').classList.add('hidden');
             document.getElementById('sec-' + secId).classList.remove('hidden');
+            if(secId === 'photos') {
+                resetSlider();
+            }
         }
 
         function backToMenu() {
