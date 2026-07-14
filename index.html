@@ -98,25 +98,45 @@
         .content-box { text-align: center; animation: fadeIn 0.5s ease; }
         .back-btn { background: none; border: none; color: var(--pink-accent); font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 13px; }
 
-        .polaroid-stack {
-            position: relative;
-            height: 220px;
-            margin: 20px auto;
-            width: 180px;
-            cursor: pointer;
-        }
-        .polaroid {
+        .polaroid-single {
             background: white;
-            padding: 10px 10px 25px 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 10px 10px 20px 10px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
             border: 1px solid #eee;
-            border-radius: 4px;
-            position: absolute;
-            width: 100%;
-            box-sizing: border-box;
-            transition: transform 0.5s ease, opacity 0.5s ease;
+            border-radius: 8px;
+            margin: 15px auto;
+            width: 200px;
+            transform: rotate(-2deg);
         }
-        .polaroid img { width: 100%; height: 140px; object-fit: cover; border-radius: 2px; }
+        .polaroid-single img { width: 100%; height: 160px; object-fit: cover; border-radius: 4px; }
+
+        .poetry-box {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: #52383e;
+            background: #fff0f3;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            border-left: 3px solid var(--pink-accent);
+        }
+
+        .bouquet-frame {
+            background: white;
+            padding: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            border-radius: 12px;
+            margin: 15px auto;
+            width: 210px;
+        }
+        .bouquet-frame img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+        }
 
         .floating-heart {
             position: absolute;
@@ -137,7 +157,6 @@
 </head>
 <body>
 
-    <!-- Working Romantic Background Music Link -->
     <audio id="bg-music" loop preload="auto">
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
@@ -145,7 +164,6 @@
 
     <div id="hearts-bg"></div>
 
-    <!-- STAGE 1: ASK QUESTION -->
     <div id="stage1" class="card-container">
         <div style="font-size: 50px; margin-bottom: 10px;">🐱</div>
         <h1>Hey Beautiful! 💕</h1>
@@ -156,7 +174,6 @@
         </div>
     </div>
 
-    <!-- STAGE 2: MAIN GRID MENU -->
     <div id="stage2" class="card-container hidden">
         <h1>Made Just For You ✨</h1>
         <p>Tap a card to open your surprise</p>
@@ -164,7 +181,7 @@
         <div class="grid-container">
             <div class="menu-item" onclick="showSection('photos')">
                 <span class="icon">📸</span>
-                <span class="label">Captured Memories</span>
+                <span class="label">My Beautiful Girl</span>
             </div>
             <div class="menu-item" onclick="showSection('letter')">
                 <span class="icon">💌</span>
@@ -181,24 +198,23 @@
         </div>
     </div>
 
-    <!-- PHOTO GALLERY SECTION -->
     <div id="sec-photos" class="card-container hidden content-box">
-        <h1>Our Memories 🎞️</h1>
-        <p>Tap the photo to see the next one!</p>
-        <div class="polaroid-stack" onclick="nextPhoto()">
-            <!-- Exact file names matched from your repository -->
-            <div class="polaroid" id="p7"><img src="photo7.jpg.JPG"></div>
-            <div class="polaroid" id="p6"><img src="photo6.jpg.JPG"></div>
-            <div class="polaroid" id="p5"><img src="photo5.jpg.JPG"></div>
-            <div class="polaroid" id="p4"><img src="photo4.jpg.PNG"></div>
-            <div class="polaroid" id="p3"><img src="photo3.jpg.PNG"></div>
-            <div class="polaroid" id="p2"><img src="photo2.jpg.JPG"></div>
-            <div class="polaroid" id="p1"><img src="photo1.jpg.JPG"></div>
+        <h1>The Most Beautiful Girl 🎞️</h1>
+        
+        <div class="polaroid-single">
+            <img src="photo1.jpg.JPG">
         </div>
+
+        <div class="poetry-box">
+            "Your eyes hold the sparkle of a million stars, ✨<br>
+            Your smile heals the deepest of my scars. 💖<br>
+            With beauty so pure, and a heart so sweet, 🌸<br>
+            You make my life beautiful, happy, and complete." 👩‍❤️‍👨🌷
+        </div>
+
         <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
     </div>
 
-    <!-- LOVE LETTER SECTION -->
     <div id="sec-letter" class="card-container hidden content-box">
         <h1>For You, Always 💌</h1>
         <div style="background: var(--pink-card); padding: 15px; border-radius: 12px; text-align: left; font-style: italic; max-height: 220px; overflow-y: auto; font-size: 13.5px; border: 1px solid #ffd3dd;">
@@ -210,16 +226,18 @@
         <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
     </div>
 
-    <!-- BOUQUET SECTION -->
     <div id="sec-bouquet" class="card-container hidden content-box">
-        <h1>A Special Bouquet 💐</h1>
-        <div style="font-size: 70px; margin: 15px 0;">💐✨🌹</div>
-        <p style="font-weight: bold; color: var(--pink-dark);">"You make my world brighter just by being in it."</p>
+        <h1>A Special Bouquet For You 💐</h1>
+        
+        <div class="bouquet-frame">
+            <img src="flower.jpg" alt="Beautiful Bouquet">
+        </div>
+
+        <p style="font-weight: bold; color: var(--pink-dark); margin-top: 15px;">"You make my world brighter just by being in it."</p>
         <p>Yeh pyaare phool duniya ki sabse pyaari ladki ke liye. Hamesha aise hi muskurati rehna! 😘</p>
         <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
     </div>
 
-    <!-- FUTURE PLANS SECTION -->
     <div id="sec-future" class="card-container hidden content-box">
         <h1>Our Future Plans ☁️</h1>
         <div style="background: var(--pink-card); padding: 15px; border-radius: 12px; font-size: 14px; text-align: left; border: 1px solid #ffd3dd;">
@@ -265,47 +283,18 @@
             const music = document.getElementById('bg-music');
             music.play().then(() => {
                 document.querySelector('.music-btn').innerText = "⏸️ Pause Song";
-            }).catch(e => console.log("Auto-play blocked by browser. User needs to tap manually."));
+            }).catch(e => console.log("Auto-play blocked"));
         }
 
         function showSection(secId) {
             document.getElementById('stage2').classList.add('hidden');
             document.getElementById('sec-' + secId).classList.remove('hidden');
-            if(secId === 'photos') resetPhotos();
         }
 
         function backToMenu() {
             const sections = ['photos', 'letter', 'bouquet', 'future'];
             sections.forEach(sec => document.getElementById('sec-' + sec).classList.add('hidden'));
             document.getElementById('stage2').classList.remove('hidden');
-        }
-
-        let currentPhotoIndex = 1;
-        function nextPhoto() {
-            if(currentPhotoIndex <= 7) {
-                const currentCard = document.getElementById('p' + currentPhotoIndex);
-                if(currentCard) {
-                    currentCard.style.transform = 'translateY(-150%) rotate(' + (Math.random() * 20 - 10) + 'deg)';
-                    currentCard.style.opacity = '0';
-                }
-                currentPhotoIndex++;
-            }
-            if(currentPhotoIndex > 7) {
-                setTimeout(() => {
-                    resetPhotos();
-                }, 600);
-            }
-        }
-
-        function resetPhotos() {
-            currentPhotoIndex = 1;
-            for(let i = 1; i <= 7; i++) {
-                const card = document.getElementById('p' + i);
-                if(card) {
-                    card.style.transform = 'rotate(' + (Math.random() * 12 - 6) + 'deg)';
-                    card.style.opacity = '1';
-                }
-            }
         }
     </script>
 </body>
