@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Made For My Lifeline ❤️</title>
+    <!-- Importing a beautiful handwriting font -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -99,15 +100,17 @@
         .content-box { text-align: center; animation: fadeIn 0.5s ease; }
         .back-btn { background: none; border: none; color: var(--pink-accent); font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 13px; }
 
+        /* Elegant Polaroid Frame with custom tape */
         .polaroid-frame {
             background: white;
             padding: 12px 12px 28px 12px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.12);
             border: 1px solid #eee;
             border-radius: 8px;
-            margin: 20px auto;
+            margin: 25px auto 15px auto;
             width: 220px;
-            transform: rotate(-2deg);
+            transform: rotate(-2.5deg);
+            position: relative;
         }
 
         .polaroid-frame img { 
@@ -117,17 +120,42 @@
             border-radius: 4px; 
         }
 
+        /* Washi tape decor for Polaroid 1 */
+        .washi-tape-top {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%) rotate(2deg);
+            width: 75px;
+            height: 18px;
+            background: rgba(255, 120, 147, 0.4);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            z-index: 5;
+        }
+
+        /* Cute little handwriting style caption under the photo */
+        .polaroid-caption {
+            font-family: 'Caveat', cursive;
+            font-size: 19px;
+            color: var(--pink-dark);
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        /* Handwritten aesthetic poetry note */
         .poetry-box {
-            font-family: 'Georgia', serif;
-            font-style: italic;
-            font-size: 14.5px;
-            line-height: 1.6;
+            font-family: 'Caveat', cursive;
+            font-size: 22px;
+            line-height: 1.4;
             color: #52383e;
-            background: #fff0f3;
-            padding: 15px;
+            background: #fffdf0; /* cute light yellow note */
+            padding: 16px;
             border-radius: 12px;
-            margin-top: 15px;
-            border-left: 3px solid var(--pink-accent);
+            margin-top: 18px;
+            border-left: 4px solid var(--pink-accent);
+            box-shadow: 0 6px 15px rgba(255, 120, 147, 0.08);
+            transform: rotate(1deg);
+            text-align: left;
         }
 
         .bouquet-frame {
@@ -140,20 +168,70 @@
         }
         .bouquet-frame img { width: 100%; height: auto; border-radius: 8px; display: block; }
 
+        /* --- BEAUTIFIED SCRAPBOOK FUTURE PLANS BOARD --- */
         .scrollable-content {
-            background: var(--pink-card);
-            padding: 18px;
-            border-radius: 16px;
-            font-size: 13.5px;
-            line-height: 1.6;
-            text-align: left;
-            border: 1px solid #ffd3dd;
-            max-height: 260px;
+            background: #fdf5f0; /* warm paper board background */
+            padding: 15px;
+            border-radius: 20px;
+            border: 2px dashed #ebd5c8;
+            max-height: 300px;
             overflow-y: auto;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.03);
         }
 
-        .plan-title { font-weight: bold; color: var(--pink-dark); font-size: 14.5px; margin-top: 12px; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-        .plan-title:first-child { margin-top: 0; }
+        /* Sticky-Note cards for future plans */
+        .plan-card {
+            background: #fffdf5; /* classic cream paper */
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 16px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+            border-top: 8px solid var(--pink-accent); /* Cute colored header tab */
+            position: relative;
+            transform: rotate(-1deg);
+            text-align: left;
+        }
+
+        .plan-card:nth-child(even) {
+            transform: rotate(1deg);
+            border-top: 8px solid #a4e2e6; /* Soft pastel teal for diversity */
+            background: #fafffc;
+        }
+
+        .plan-card:nth-child(3n) {
+            transform: rotate(-0.5deg);
+            border-top: 8px solid #e0b3ff; /* Soft pastel violet */
+            background: #fdfaff;
+        }
+
+        /* Tiny hanging paperclip visual effect */
+        .plan-card::after {
+            content: '📎';
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            font-size: 16px;
+            transform: rotate(-10deg);
+            opacity: 0.8;
+        }
+
+        .plan-title-handwritten {
+            font-family: 'Caveat', cursive;
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--pink-dark);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .plan-desc-hindi {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #5d484b;
+        }
 
         /* --- ENVELOPE & HANDWRITTEN LETTER STYLING --- */
         .envelope-wrapper {
@@ -237,6 +315,7 @@
 </head>
 <body>
 
+    <!-- Background Music -->
     <audio id="bg-music" loop preload="auto">
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
@@ -244,6 +323,7 @@
 
     <div id="hearts-bg"></div>
 
+    <!-- STAGE 1: ASK QUESTION -->
     <div id="stage1" class="card-container">
         <div style="font-size: 50px; margin-bottom: 10px;">🐱</div>
         <h1>Hey Beautiful! 💕</h1>
@@ -254,6 +334,7 @@
         </div>
     </div>
 
+    <!-- STAGE 2: MAIN GRID MENU -->
     <div id="stage2" class="card-container hidden">
         <h1>Made Just For You ✨</h1>
         <p>Tap a card to open your surprise</p>
@@ -278,26 +359,36 @@
         </div>
     </div>
 
+    <!-- PHOTO GALLERY SECTION (Beautified Handwritten Page) -->
     <div id="sec-photos" class="card-container hidden content-box">
         <h1>The Most Beautiful Girl 🎞️</h1>
+        
         <div class="polaroid-frame">
+            <div class="washi-tape-top"></div>
             <img src="photo1.jpg.JPG" alt="My Beautiful Girl">
+            <div class="polaroid-caption">My Sunshine ✨🌻</div>
         </div>
+
         <div class="poetry-box">
-            "Your eyes hold the sparkle of a million stars, and your smile heals the deepest of my scars. Happy Birthday to the most special girl! ✨💖"
+            "Your eyes hold the sparkle of a million stars, and your smile heals the deepest of my scars. Happy Birthday to the most special girl! I hope this smile stays on your face forever and ever... ✨💖"
         </div>
+
         <br>
         <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
     </div>
 
+    <!-- LOVE LETTER SECTION -->
     <div id="sec-letter" class="card-container hidden content-box">
-        <h1>A real Love Letter 💌</h1>
+        <h1>A Not So Love Letter 💌</h1>
         
+        <!-- Envelope visible at first -->
         <div id="envelope-click" class="envelope-wrapper" onclick="openLetter()">
             <div class="envelope-heart">💝</div>
         </div>
 
+        <!-- Hidden handwritten letter that slides out -->
         <div id="actual-letter" class="notebook-page hidden">
+            <!-- Polaroid photo 7 attached with tape effect -->
             <div class="attached-photo">
                 <div class="washi-tape"></div>
                 <img src="photo7.jpg.JPG" alt="Birthday Girl">
@@ -309,9 +400,7 @@
             
             23 July ko jab tum is duniya mein aayi thin, toh kisi ko nahi pata tha ki tum ek din kisi ki poori duniya ban jaogi. Main bohot lucky hoon ki tum meri life mein ho. 👑<br><br>
             
-            Tumhara gussa hona, tumhara smile karna, sab kuch mere liye bohot special hai. May this birthday bring you everything you've ever wished for. Success, happiness, aur mera bohot saara pyaar! I’m so incredibly proud of you and the amazing person you are. Thank you for working so hard, and most importantly, thank you for being born and coming into my life. You deserve eternal happiness.
-Please, keep shining like the star you are. I love you, I really do. ❤️
-Happy Birthday, the sweetest person I've ever met! 🎂🎈 ✨<br><br>
+            Tumhara gussa hona, tumhara smile karna, sab kuch mere liye bohot special hai. May this birthday bring you everything you've ever wished for. Success, happiness, aur mera bohot saara pyaar! ✨<br><br>
             
             <span class="highlight-pink">I love you, I really do.</span> I wish I could hold your hand right now and tell you that you're the sweetest person I've ever met. 💖<br><br>
             
@@ -322,6 +411,7 @@ Happy Birthday, the sweetest person I've ever met! 🎂🎈 ✨<br><br>
         <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
     </div>
 
+    <!-- BOUQUET SECTION -->
     <div id="sec-bouquet" class="card-container hidden content-box">
         <h1>A Special Bouquet For You 💐</h1>
         <div class="bouquet-frame">
@@ -332,20 +422,32 @@ Happy Birthday, the sweetest person I've ever met! 🎂🎈 ✨<br><br>
         <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
     </div>
 
+    <!-- FUTURE PLANS SECTION (Beautified Scrapbook Memory Board) -->
     <div id="sec-future" class="card-container hidden content-box">
         <h1>Our Future Plans ☁️</h1>
         <div class="scrollable-content">
-            <div class="plan-title">📌 One Day: No more screens, just you and me. ❤️</div>
-            <div style="color: #6d5157; margin-bottom: 12px;">
-                "Ek din aisa zaroor aayega jab humein baat karne ke liye phone ki screen nahi dekhni padegi. Humare beech koi digital distance nahi hoga, koi network issue nahi hoga, aur na hi humein milne ke liye countdown karna padega. Us din bas hum dono honge—ek sath, ek hi jagah par. Main bina kisi screen ke tumhari aankhon me dekh sakunga, tumhara hath pakad sakunga, aur tumhe batate waqt ki tum mere liye kya ho, mujhe bas ek pyaari si hug mil sakegi. Wo din humare saare sabaar (patience) ka sabse haseen inaam hoga." 🥰✨
+            <!-- Plan 1 -->
+            <div class="plan-card">
+                <div class="plan-title-handwritten">📌 One Day: No more screens, just you and me. ❤️</div>
+                <div class="plan-desc-hindi">
+                    "Ek din aisa zaroor aayega jab humein baat karne ke liye phone ki screen nahi dekhni padegi. Humare beech koi digital distance nahi hoga, koi network issue nahi hoga, aur na hi humein milne ke liye countdown karna padega. Us din bas hum dono honge—ek sath, ek hi jagah par. Main bina kisi screen ke tumhari aankhon me dekh sakunga, tumhara hath pakad sakunga, aur tumhe batate waqt ki tum mere liye kya ho, mujhe bas ek pyaari si hug mil sakegi. Wo din humare saare sabaar (patience) ka sabse haseen inaam hoga." 🥰✨
+                </div>
             </div>
-            <div class="plan-title">📌 Our Dream: A cute little home filled with countless late-night talks and smiles. 🏡💞</div>
-            <div style="color: #6d5157; margin-bottom: 12px;">
-                "Mera sabse bada aur sabse pyaara sapna yahi hai ki humara ek chhota sa, khoobsurat sa ghar ho. Ek aisi jagah jise hum dono milkar 'humara' banayein. Jahan raat ki gehrayi me hum dono dher saari baatein karein—wo lambi, be-matlab ki baatein jo hum abhi call par karte hain, wo wahan aamne-saamne baithkar coffee peete hue hongi. Hum sath me muskurayein, purani baaton par hasenge, aur jab din bhar ki thakaan ke baad hum sath honge, toh wo sukoon duniya ki kisi bhi cheez se badhkar hoga. Us ghar ka har ek kona humari hasi aur humare pyaar se bhara hoga." ☕💫
+            
+            <!-- Plan 2 -->
+            <div class="plan-card">
+                <div class="plan-title-handwritten">📌 Our Dream: A cute little home. 🏡💞</div>
+                <div class="plan-desc-hindi">
+                    "Mera sabse bada aur sabse pyaara sapna yahi hai ki humara ek chhota sa, khoobsurat sa ghar ho. Ek aisi jagah jise hum dono milkar 'humara' banayein. Jahan raat ki gehrayi me hum dono dher saari baatein karein—wo lambi, be-matlab ki baatein jo hum abhi call par karte hain, wo wahan aamne-saamne baithkar coffee peete hue hongi. Hum sath me muskurayein, purani baaton par hasenge, aur jab din bhar ki thakaan ke baad hum sath honge, toh wo sukoon duniya ki kisi bhi cheez se badhkar hoga. Us ghar ka har ek kona humari hasi aur humare pyaar se bhara hoga." ☕💫
+                </div>
             </div>
-            <div class="plan-title">📌 Promise: I will always stand by you, through every single phase of life. ✨👩‍❤️‍👨</div>
-            <div style="color: #6d5157;">
-                "Aur main tumse ye waada karta hoon ki chahe doori kitni bhi ho, ya zindagi humein kisi bhi mod par le jaye, main humesha tumhare sath khada rahunga. Tumhare khushi ke palon me tumhare sath hasne ke liye, aur tumhare mushkil waqt me tumhara hosla banne ke liye. Zindagi ke har phase me, har utar-chadav me, tum mujhe apne sabse kareeb paogi. Mera ye pyaar aur mera ye sath tumhare liye humesha utna hi saccha aur utna hi mazboot rahega. Tum bas mera hath thame rakhna, baaki har raah hum sath milkar tay kar lenge." 🌹🔗
+            
+            <!-- Plan 3 -->
+            <div class="plan-card">
+                <div class="plan-title-handwritten">📌 Promise: I will always stand by you. ✨👩‍❤️‍👨</div>
+                <div class="plan-desc-hindi">
+                    "Aur main tumse ye waada karta hoon ki chahe doori kitni bhi ho, ya zindagi humein kisi bhi mod par le jaye, main humesha tumhare sath khada rahunga. Tumhare khushi ke palon me tumhare sath hasne ke liye, aur tumhare mushkil waqt me tumhara hosla banne ke liye. Zindagi ke har phase me, har utar-chadav me, tum mujhe apne sabse kareeb paogi. Mera ye pyaar aur mera ye sath tumhare liye humesha utna hi saccha aur utna hi mazboot rahega. Tum bas mera hath thame rakhna, baaki har raah hum sath milkar tay kar lenge." 🌹🔗
+                </div>
             </div>
         </div>
         <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
@@ -413,3 +515,4 @@ Happy Birthday, the sweetest person I've ever met! 🎂🎈 ✨<br><br>
     </script>
 </body>
 </html>
+
