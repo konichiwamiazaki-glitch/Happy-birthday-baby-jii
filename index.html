@@ -31,42 +31,6 @@
             position: relative;
         }
 
-        /* --- BACKGROUND LYRICS STYLING --- */
-        #lyrics-bg-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .bg-lyric-text {
-            font-size: 48px;
-            font-weight: 900;
-            color: rgba(0, 0, 0, 0.04); /* Very faint background text */
-            text-transform: uppercase;
-            text-align: center;
-            line-height: 1.2;
-            max-width: 90%;
-            transform: scale(0.95);
-            opacity: 0;
-            transition: opacity 1s ease, transform 1.5s ease;
-            position: absolute;
-        }
-
-        .bg-lyric-text.active {
-            opacity: 1;
-            transform: scale(1);
-        }
-
         .music-btn {
             position: fixed;
             top: 15px;
@@ -324,11 +288,8 @@
     </audio>
     <button class="music-btn" onclick="toggleMusic()">🎵 Play Our Song</button>
 
-    <!-- Background Layer for Floating Elements and Lyrics -->
+    <!-- Background Layer for Floating Elements -->
     <div id="hearts-bg"></div>
-    <div id="lyrics-bg-container">
-        <div id="bg-lyric" class="bg-lyric-text"></div>
-    </div>
 
     <!-- STAGE 1: ASK QUESTION -->
     <div id="stage1" class="card-container">
@@ -421,7 +382,7 @@
         <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
     </div>
 
-    <!-- FUTURE PLANS SECTION (UPDATED TO MATCH IMAGES EXACTLY) -->
+    <!-- FUTURE PLANS SECTION -->
     <div id="sec-future" class="card-container hidden content-box">
         <h1>Our Future Plans ☁️</h1>
         <div class="plans-board">
@@ -451,47 +412,7 @@
     </div>
 
     <script>
-        // LYRICS DATA WITH TIMING (In seconds) FOR "I Think They Call This Love"
-        const lyricsTimeline = [
-            { time: 1, text: "I think they call this love" },
-            { time: 5, text: "I think they call this love..." },
-            { time: 9, text: "I've never felt this way before" },
-            { time: 13, text: "When you look into my eyes" },
-            { time: 17, text: "I see the stars align" },
-            { time: 22, text: "You make my heart beat fast" },
-            { time: 26, text: "I hope this moment lasts forever" },
-            { time: 31, text: "Yeah, I think they call this love ❤️" },
-            { time: 36, text: "Every little thing you do" },
-            { time: 40, text: "Makes me fall deep for you" },
-            { time: 44, text: "Happy Birthday, My Only One ✨" }
-        ];
-
         const music = document.getElementById('bg-music');
-        const lyricEl = document.getElementById('bg-lyric');
-
-        // Monitor track time to switch lyrics smoothly
-        music.addEventListener('timeupdate', () => {
-            const currentTime = music.currentTime;
-            let activeText = "";
-
-            for (let i = 0; i < lyricsTimeline.length; i++) {
-                if (currentTime >= lyricsTimeline[i].time) {
-                    activeText = lyricsTimeline[i].text;
-                }
-            }
-
-            if (lyricEl.innerText !== activeText) {
-                lyricEl.classList.remove('active');
-                setTimeout(() => {
-                    if (activeText) {
-                        lyricEl.innerText = activeText;
-                        lyricEl.classList.add('active');
-                    } else {
-                        lyricEl.innerText = "";
-                    }
-                }, 400); // Smooth transition fade
-            }
-        });
 
         function toggleMusic() {
             const btn = document.querySelector('.music-btn');
