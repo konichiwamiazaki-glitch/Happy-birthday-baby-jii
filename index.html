@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Made For My Lifeline ❤️</title>
     <!-- Importing a beautiful handwriting font -->
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght=500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --pink-bg: #ffeef2;
@@ -28,6 +28,43 @@
             min-height: 100vh;
             overflow: hidden;
             color: var(--text-color);
+            position: relative;
+        }
+
+        /* --- BACKGROUND LYRICS STYLING --- */
+        #lyrics-bg-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .bg-lyric-text {
+            font-size: 48px;
+            font-weight: 900;
+            color: rgba(0, 0, 0, 0.04); /* Very faint background text */
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 1.2;
+            max-width: 90%;
+            transform: scale(0.95);
+            opacity: 0;
+            transition: opacity 1s ease, transform 1.5s ease;
+            position: absolute;
+        }
+
+        .bg-lyric-text.active {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .music-btn {
@@ -281,13 +318,17 @@
 </head>
 <body>
 
-    <!-- Local Audio File Setup for "I Think They Call This Love" -->
+    <!-- Local Audio File Setup -->
     <audio id="bg-music" loop preload="auto">
-        <source src="song.mp3.mp3" type="audio/mpeg">
+        <source src="song.mp3" type="audio/mpeg">
     </audio>
     <button class="music-btn" onclick="toggleMusic()">🎵 Play Our Song</button>
 
+    <!-- Background Layer for Floating Elements and Lyrics -->
     <div id="hearts-bg"></div>
+    <div id="lyrics-bg-container">
+        <div id="bg-lyric" class="bg-lyric-text"></div>
+    </div>
 
     <!-- STAGE 1: ASK QUESTION -->
     <div id="stage1" class="card-container">
@@ -380,22 +421,25 @@
         <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
     </div>
 
-    <!-- FUTURE PLANS SECTION -->
+    <!-- FUTURE PLANS SECTION (UPDATED TO MATCH IMAGES EXACTLY) -->
     <div id="sec-future" class="card-container hidden content-box">
         <h1>Our Future Plans ☁️</h1>
         <div class="plans-board">
+            <!-- Card 1 -->
             <div class="sticky-note note-pink">
                 <div class="note-pin">📎</div>
                 <div class="plan-title-board">📌 One Day: No more screens, just you and me. ❤️</div>
                 <div class="plan-text-board">"Ek din aisa zaroor aayega jab humein baat karne ke liye phone ki screen nahi dekhni padegi. Humare beech koi digital distance nahi hoga, koi network issue nahi hoga, aur na hi humein milne ke liye countdown karna padega. Us din bas hum dono honge ek sath, ek hi jagah par. Main bina kisi screen ke teri aankhon me dekh sakunga, aapka hath pakad sakunga, aur aaapko batate waqt ki aap mere liye kya ho, mujhe bas ek pyaari si hug mil sakegi. Wo din humare saare sabaar ka sabse haseen inaam hoga." 🥰✨</div>
             </div>
             
+            <!-- Card 2 -->
             <div class="sticky-note note-yellow">
                 <div class="note-pin">📎</div>
                 <div class="plan-title-board">📌 Our Dream: A cute little home filled with countless late-night talks and smiles. 🏡💞</div>
                 <div class="plan-text-board">"Mera sabse bada aur sabse pyaara sapna yahi hai ki humara ek chhota sa, khoobsurat sa ghar ho. Ek aisi jagah jise hum dono milkar 'humara' banayein. Jahan raat ki gehrayi me hum dono dher saari baatein karein wo lambi, be-matlab ki baatein jo hum abhi call par karte hain, wo wahan aamne-saamne baithkar coffee peete hue hongi black coffee nahi milk coffe🥰🥰. Hum sath me muskurayein, purani baaton par hasenge, aur jab din bhar ki thakaan ke baad hum sath honge, toh wo sukoon duniya ki kisi bhi cheez se badhkar hoga. Us ghar ka har ek kona humari hasi aur humare pyaar se bhara hoga." ☕💫</div>
             </div>
             
+            <!-- Card 3 -->
             <div class="sticky-note note-blue">
                 <div class="note-pin">📎</div>
                 <div class="plan-title-board">📌 Promise: I will always stand by you, through every single phase of life. ✨👩‍❤️‍👨</div>
@@ -407,8 +451,49 @@
     </div>
 
     <script>
+        // LYRICS DATA WITH TIMING (In seconds) FOR "I Think They Call This Love"
+        const lyricsTimeline = [
+            { time: 1, text: "I think they call this love" },
+            { time: 5, text: "I think they call this love..." },
+            { time: 9, text: "I've never felt this way before" },
+            { time: 13, text: "When you look into my eyes" },
+            { time: 17, text: "I see the stars align" },
+            { time: 22, text: "You make my heart beat fast" },
+            { time: 26, text: "I hope this moment lasts forever" },
+            { time: 31, text: "Yeah, I think they call this love ❤️" },
+            { time: 36, text: "Every little thing you do" },
+            { time: 40, text: "Makes me fall deep for you" },
+            { time: 44, text: "Happy Birthday, My Only One ✨" }
+        ];
+
+        const music = document.getElementById('bg-music');
+        const lyricEl = document.getElementById('bg-lyric');
+
+        // Monitor track time to switch lyrics smoothly
+        music.addEventListener('timeupdate', () => {
+            const currentTime = music.currentTime;
+            let activeText = "";
+
+            for (let i = 0; i < lyricsTimeline.length; i++) {
+                if (currentTime >= lyricsTimeline[i].time) {
+                    activeText = lyricsTimeline[i].text;
+                }
+            }
+
+            if (lyricEl.innerText !== activeText) {
+                lyricEl.classList.remove('active');
+                setTimeout(() => {
+                    if (activeText) {
+                        lyricEl.innerText = activeText;
+                        lyricEl.classList.add('active');
+                    } else {
+                        lyricEl.innerText = "";
+                    }
+                }, 400); // Smooth transition fade
+            }
+        });
+
         function toggleMusic() {
-            const music = document.getElementById('bg-music');
             const btn = document.querySelector('.music-btn');
             if (music.paused) {
                 music.play().catch(e => console.log("Audio play error:", e));
@@ -438,7 +523,6 @@
         function goToMenu() {
             document.getElementById('stage1').classList.add('hidden');
             document.getElementById('stage2').classList.remove('hidden');
-            const music = document.getElementById('bg-music');
             music.play().then(() => {
                 document.querySelector('.music-btn').innerText = "⏸️ Pause Song";
             }).catch(e => console.log("Auto-play blocked"));
